@@ -19,19 +19,19 @@ class AirPlaneFlightControllerAPI extends Controller
         if(Auth::attempt(['username' => request('username'), 'password' => request('password')])){
             $user = Auth::user();
             $success['token'] = Str::random(64); //generate token
-            $success['username'] = $user->username;
-            $success['id'] = $user->id;
-            $success['name'] = $user->name;
+            $success['username'] = $passenger->username;
+            $success['id'] = $passenger->id;
+            $success['name'] = $passenger->name;
 
             //saving token to database
-            $user->remember_token = $success['token'];
-            $user->save();
+            $passenger->remember_token = $success['token'];
+            $passenger->save();
             //---
 
             $logs = new Logs();
-            $logs->userid = $user->id;
+            $logs->passengerid = $passenger->id;
             $logs->log="Login";
-            $logs->logdetails="User $user->username has logged in";
+            $logs->logdetails="User $passenger->username has logged in";
             $logs->logtype="API Login";
             $log->save();
 
@@ -56,21 +56,21 @@ class AirPlaneFlightControllerAPI extends Controller
         } else {
             $input = $request->all();
             //check email if already existing or not
-            if(User::where('email', $input['email']->exists())) {
+            if(Paasenger::where('email', $input['email']->exists())) {
                 return response()->json(['response' => 'Email already exists'], 401);
-            } else if(User::where('username', $input['username']->exists())) {
+            } else if(Passenger::where('username', $input['username']->exists())) {
                 //check username if already existing or not
                 return response()->json(['response' => 'Username already exists'], 401);
 
             } else {
                 //bcrypt password
                 $input['password'] = bcrypt($input['password']);
-                $user = User::create($input);
+                $passenger = Passenger::create($input);
                
                 $success['token'] = Str::random(64); //generate token
-                $success['username'] = $user->username;
-                $success['id'] = $user->id;
-                $success['name'] = $user->name;
+                $success['username'] = $passenger->username;
+                $success['id'] = $paasenger->id;
+                $success['name'] = $passenger->name;
 
                 return response()->json($success, $this->successStatus);         
                    

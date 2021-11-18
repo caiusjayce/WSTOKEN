@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AirPlaneFlightControllerAPI;
-use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\AirplaneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +25,6 @@ Route::post('login', [AirPlaneFlightControllerAPI::class, 'login']);
 Route::post('register', [AirPlaneFlightControllerAPI::class, 'register']);
 
 //POSTS
-Route::get('get-all-posts', [PostController::class, 'getAllPosts']);
-Route::get('get-post', [PostController::class, 'getPost']);
-Route::get('search-post', [PostController::class, 'searchPost']);
+Route::get('get-all-airplanes', [AirplaneController::class, 'getAllAirplanes']);
+Route::get('get-airplane', [AirplaneController::class, 'getAirplane']);
+Route::get('search-airplane', [AirplaneController::class, 'searchAirplane']);
